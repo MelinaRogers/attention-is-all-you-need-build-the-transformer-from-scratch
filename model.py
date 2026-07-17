@@ -9,22 +9,11 @@ import numpy as np
 # Step 1 - build_token_to_id_vocab
 def build_token_to_id_vocab(sentences, specials=('<pad>', '<bos>', '<eos>', '<unk>')):
     # TODO: build a token-to-id dict with specials first, then corpus tokens in first-seen order.
-    vocab = {}
-    cur = 0
-    for value in specials:
-        vocab[value] = cur
-        cur += 1
-
-
+    vocab = {token: idx for idx,token in enumerate(specials)}
     for sentence in sentences:
-        new_list = sentence.split(' ')
-        for word in new_list:
-            if word in vocab.keys():
-                continue
-            else: 
-                vocab[word] = cur
-            cur += 1
-    
+        for token in sentence.split():
+            if token not in vocab:
+                vocab[token] = len(vocab)
     return vocab
 
 # Step 2 - build_id_to_token_vocab (not yet solved)
